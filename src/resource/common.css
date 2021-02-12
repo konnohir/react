@@ -10,6 +10,15 @@ header, footer {
   background: black;
   color: white;
   text-align: center;
+  display: flex;
+}
+
+header {
+  justify-content: space-between;
+}
+
+footer {
+  justify-content: center;
 }
 
 main {
@@ -19,11 +28,16 @@ main {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 1em;
+  box-sizing: border-box;
   color: white;
 }
 
-header > a {
-  margin: 0 0.5rem;
+header a {
+  display: inline-block;
+  height: 100%;
+  margin: 0 0.25rem;
+  padding: 0 0.25rem;
 }
 
 a {
@@ -31,8 +45,21 @@ a {
   text-decoration: none;
 }
 
+h2, h3 {
+  margin: 0;
+}
+
 a:hover {
   text-decoration: underline;
+}
+
+.error {
+  font-size: 70%;
+}
+
+.error input {
+  border: solid 1px #ff5555;
+  background: #ffdddd
 }
 
 .App-link {

@@ -7,7 +7,7 @@ import MainPanel from './MainPanel'
 import FooterPanel from './FooterPanel'
 
 /**
- * レイアウト
+ * アプリケーションレイアウト
  */
 const AppLayout = () => {
 

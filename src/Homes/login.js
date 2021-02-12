@@ -1,9 +1,9 @@
-import React, { useContext, useState } from 'react';
-import SessionContext from '../lib/session';
+import React, { useState } from 'react';
+import {useSession} from '../lib/session'
 
 export default function Login() {
   /** セッション情報 */
-  const session = useContext(SessionContext);
+  const session = useSession();
 
   /** ID */
   const [id, setId] = useState('');
@@ -15,7 +15,8 @@ export default function Login() {
   const [error, setError] = useState({});
 
   /** ログインボタン押下時 */
-  const loginBtn = () => {
+  const loginBtn = (event) => {
+    event.preventDefault();
 
     if (id.length === 0) {
       setError({ ...error, id: '入力してください。' })
@@ -26,15 +27,17 @@ export default function Login() {
     session.setIdentity({ "name": id });
   }
   return (
-    <main>
-      <div>
-        <input type="text" placeholder="ID" value={id} onChange={(event) => setId(event.target.value)} />
-        {error.id && <div>{error.id}</div>}
-      </div>
-      <div>
-        <input type="password" placeholder="Password" value={password} onChange={(event) => setPassword(event.target.value)} />
-      </div>
-      <button onClick={loginBtn}>Login</button>
-    </main>
+    <>
+      <form onSubmit={loginBtn}>
+        <div className={error.id && 'error'}>
+          <input type="text" placeholder="ID" autoComplete="username" value={id} onChange={(event) => setId(event.target.value)} />
+          {error.id && <div>{error.id}</div>}
+        </div>
+        <div>
+          <input type="password" placeholder="Password" autoComplete="current-password" value={password} onChange={(event) => setPassword(event.target.value)} />
+        </div>
+        <button type="submit">Login</button>
+      </form>
+    </>
   )
 };

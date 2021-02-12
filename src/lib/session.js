@@ -1,8 +1,23 @@
-import { createContext } from 'react';
-
+import { createContext, useContext } from 'react';
 import useLocalStorage from './localStorage'
 
-const useSession = () => {
+/**
+ * セッションコンテキスト
+ */
+const SessionContext = createContext();
+
+/**
+ * Session context hook
+ */
+export const useSession = () => {
+  const session = useContext(SessionContext);
+  return session;
+}
+
+/**
+ * Context provider
+ */
+export const BrowserSession = (props) => {
   const [identity, setIdentity] = useLocalStorage('identity', null);
 
   const session = {
@@ -10,21 +25,11 @@ const useSession = () => {
     setIdentity,
   };
 
-  return session;
-}
-
-export const BrowserSession = (props) => {
-  const session = useSession();
-
   return (
     <SessionContext.Provider value={session}>
       {props.children}
     </SessionContext.Provider>
   )
 }
-/**
- * セッションコンテキスト
- */
-const SessionContext = createContext();
 
 export default SessionContext;

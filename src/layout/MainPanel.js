@@ -1,19 +1,36 @@
-import React, { useContext, useLayoutEffect, useMemo, useState } from 'react';
+import React, { useLayoutEffect } from 'react';
 import { Route, useHistory, useLocation } from 'react-router-dom';
-
-import SessionContext from '../lib/session'
+import {useSession} from '../lib/session'
 
 
 import Home from '../Homes/index';
-import About from '../Homes/about';
+import UserIndex from '../Users';
 import Login from '../Homes/login';
 
 /**
  * メインコンテンツ
  */
 const MainPanel = () => {
+  // ログイン判定
+  useAuthenticationCheck();
+
+  return (
+    <main>
+      <Route exact path='/' component={(Home)} />
+      <AuthRoute path='/users' component={UserIndex} />
+      <AuthRoute path='/users/add' component={UserIndex} />
+      <AuthRoute path='/users/edit/:id' component={UserIndex} />
+      <Route exact path='/login' component={Login} />
+    </main>
+  )
+};
+
+/**
+ * ログイン判定 Hook
+ */
+const useAuthenticationCheck = () => {
   /** セッション情報 */
-  const session = useContext(SessionContext);
+  const session = useSession();
 
   /** URLパス */
   const location = useLocation();
@@ -21,30 +38,25 @@ const MainPanel = () => {
   /** historyAPI */
   const history = useHistory();
 
-  // 未ログイン状態ならログイン画面に遷移する
   useLayoutEffect(() => {
+    // 未ログイン状態ならログイン画面に遷移する
     if (!session.identity && location.pathname !== '/login') {
-      history.push('/login');
+      history.replace('/login');
     }
-    if (session.identity && location.pathname === '/login') {
-      history.push('/');
+    // ログイン状態ならトップ画面に遷移する
+    if (session.identity && location.pathname.toLowerCase() === '/login') {
+      history.replace('/');
     }
   });
+}
 
-  return (
-    <main>
-      <Route exact path='/' component={(Home)} />
-      <Route exact path='/about' component={About} />
-      <AuthRoute path='/about/:id' component={About} />
-      <Route exact path='/login' component={Login} />
-    </main>
-  )
-};
-
+/**
+ * 認証ルート
+ */
 const AuthRoute = (props) => {
   const { path, component } = props;
-  // const [,controller, action] = path.split('/');
-  const isShow = true;
+  const [,controller, action] = path.split('/');
+  const isShow = controller || action;
   return (
     isShow && <Route exact path={path} component={component} />
   )
