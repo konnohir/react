@@ -1,27 +1,20 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import { BrowserSession } from '../lib/session'
 
 import HeaderPanel from './HeaderPanel'
 import MainPanel from './MainPanel'
 import FooterPanel from './FooterPanel'
 
 /**
- * アプリケーションレイアウト
+ * アプリケーション共通レイアウト
  */
-const AppLayout = () => {
-
+export default function AppLayout({ children }) {
   return (
     <React.StrictMode>
-      <BrowserRouter>
-        <BrowserSession>
-          <HeaderPanel />
-          <MainPanel />
-          <FooterPanel />
-        </BrowserSession>
-      </BrowserRouter>
+      <HeaderPanel />
+      <MainPanel>
+        {children}
+      </MainPanel>
+      <FooterPanel />
     </React.StrictMode>
   );
-}
-
-export default AppLayout;
+};

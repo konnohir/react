@@ -1,12 +1,12 @@
-import React from 'react'
+import React from 'react';
 
 /**
  * フッターパネル
  */
-const FooterPanel = () => (
-  <footer>
-    © 2021 konnohir
-  </footer>
-);
-
-export default FooterPanel;
+export default React.memo(function FooterPanel() {
+  return (
+    <footer>
+      © 2021 konnohir
+    </footer>
+  )
+});

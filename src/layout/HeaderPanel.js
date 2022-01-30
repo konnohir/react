@@ -5,8 +5,7 @@ import { useSession } from '../lib/session'
 /**
  * ヘッダーパネル
  */
-const HeaderPanel = () => {
-
+export default React.memo(function HeaderPanel() {
     /** セッション情報 */
     const session = useSession();
 
@@ -34,6 +33,4 @@ const HeaderPanel = () => {
             </nav>
         </header>
     )
-};
-
-export default HeaderPanel;
+});
