@@ -9,12 +9,6 @@ export default React.memo(function HeaderPanel() {
     /** セッション情報 */
     const session = useSession();
 
-    /** ログアウトボタン押下時 */
-    const logoutBtn = () => {
-        // 識別子クリア (ログアウト)
-        session.setIdentity(null);
-    }
-
     // 未ログインならヘッダーには何も表示しない
     if (!session.identity) {
         return (<header />)
@@ -29,7 +23,7 @@ export default React.memo(function HeaderPanel() {
             </nav>
             <nav aria-labelledby="secondary">
                 <Link to="/profile">{session.identity.name}</Link>
-                <Link to="/logout" onClick={logoutBtn}>Logout</Link>
+                <Link to="/logout">Logout</Link>
             </nav>
         </header>
     )

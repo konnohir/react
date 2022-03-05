@@ -10,14 +10,13 @@ const SessionContext = createContext();
  * Session context hook
  */
 export const useSession = () => {
-  const session = useContext(SessionContext);
-  return session;
+  return useContext(SessionContext);
 }
 
 /**
  * Context provider
  */
-export const BrowserSession = (props) => {
+export const BrowserSession = ({children}) => {
   const [identity, setIdentity] = useLocalStorage('identity', null);
 
   const session = {
@@ -27,7 +26,7 @@ export const BrowserSession = (props) => {
 
   return (
     <SessionContext.Provider value={session}>
-      {props.children}
+      {children}
     </SessionContext.Provider>
   )
 }

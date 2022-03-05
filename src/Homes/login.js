@@ -8,12 +8,10 @@ export default function HomeLogin() {
 
   /** ID */
   const [id, setId] = useState('');
+  const [idError, setIdError] = useState();
 
   /** パスワード */
   const [password, setPassword] = useState('');
-
-  /** バリデーションメッセージ */
-  const [idError, setIdError] = useState();
 
   /** ログインボタン押下時 */
   const loginBtn = (event) => {
